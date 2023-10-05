@@ -1,3 +1,5 @@
 from turtle import Turtle, TurtleScreen
+from environment import Environment
 
-screen = TurtleScreen()
+if __name__=="__main__":
+    pass

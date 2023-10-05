@@ -1,8 +1,8 @@
-from turtle import Turtle
+from turtle import RawTurtle
 import random
 
 
-class TurtleAgent(Turtle):
+class TurtleAgent(RawTurtle):
     def __init__(self):
         super().__init__()
         self.energy = random.randint(0,100) #born with random energy, if energy reaches zero turtle dies
