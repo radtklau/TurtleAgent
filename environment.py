@@ -1,8 +1,15 @@
-from turtle import Turtle, Screen
+import turtle
+from turtle_agent import TurtleAgent
 
-class Environment(Screen):
+# Create a custom environment class
+class Environment:
     def __init__(self):
-        super().__init__(canvas=None)
-        self.bgcolor("black")
-        self.setup(width=500, height=500, startx=0, starty=0)
-        self.food = []
+        # Create a Screen object
+        self.screen = turtle.Screen()
+        self.screen.bgcolor("white")  # Set background color
+        self.screen.setup(500, 500, 0, 0)
+
+    def create_turtle(self):
+        # Create a Turtle object
+        new_turtle = TurtleAgent()
+        return new_turtle
