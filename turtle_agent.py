@@ -1,37 +1,27 @@
 from turtle import Turtle
 import random
 
-screen = Screen()
-screen.bgcolor("black")
-screen.colormode(255)
-
-turtles = []
-for _ in range(100):
-    turtle = Turtle()
-    turtle.color("green")
-    turtle.hideturtle()
-    turtle.speed(0)
-    turtle.penup()
-    turtle.goto(0, -250)  # Set initial position to (0, 0)
-    turtle.setheading(90)
-    turtles.append(turtle)
-
-for i in range(100):
-    for turtle in turtles:
-        turtle.setheading(random.randint(0,180))
-        turtle.pendown()
-        #turtle.color((random.randint(0,255),random.randint(0,255),random.randint(0,255)))
-        #turtle.width(random.choice([1,5,10,20]))
-        turtle.forward(random.randint(0,100))
-
-screen.update()
-screen.mainloop()
 
 class TurtleAgent(Turtle):
     def __init__(self):
         super().__init__()
-        self.energy = random.randint(0,100)
+        self.energy = random.randint(0,100) #born with random energy, if energy reaches zero turtle dies
+        self.vision = (random.randint(0,10), random.randint(0,180)) #(vision distance, field of sight)
+        self.velo = random.randint(0,10) #distance a turtle can cover in one time step
+        self.dead = False
 
         self.speed(0)
         self.color("green")
         self.penup()
+
+    def eat(self, food):
+        self.energy += food.energy
+
+    def move(self):
+        self.energy -= 1
+
+    def die(self):
+        if self.energy <= 0:
+            self.dead = True
+
+    
