@@ -1,5 +1,6 @@
 import turtle
 from turtle_agent import TurtleAgent
+import random
 
 # Create a custom environment class
 class Environment:
@@ -7,9 +8,16 @@ class Environment:
         # Create a Screen object
         self.screen = turtle.Screen()
         self.screen.bgcolor("black")  # Set background color
-        self.screen.setup(1000, 1000, 0, 0)
+        self.food = []
+        self.turtles = []
 
-    def create_turtle(self):
+    def spawn_turtles(self):
         # Create a Turtle object
-        new_turtle = TurtleAgent()
-        return new_turtle
+        for _ in range(25):
+            new_turtle = TurtleAgent(plant=False)
+            self.turtles.append(new_turtle)
+    
+    def spawn_food(self):
+        for _ in range(25):
+            new_plant = TurtleAgent(plant=True)
+            self.food.append(new_plant)

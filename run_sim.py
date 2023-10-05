@@ -4,13 +4,14 @@ from turtle_agent import TurtleAgent
 
 if __name__=="__main__":
     env = Environment()
-
-    turtles = []
-    for _ in range(10):
-        turtle = env.create_turtle()
-        turtles.append(turtle)
+    env.screen.setworldcoordinates(0,0,1000,1000)
+    env.screen.mode("world")
+    env.spawn_food()
+    env.spawn_turtles()
 
     while True:
-        for turtle in turtles:
+        for turtle in env.turtles:
+            if turtle.dead:
+                continue
             turtle.move()
 
