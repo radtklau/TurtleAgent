@@ -1,6 +1,6 @@
 from turtle import Turtle
 import random
-
+import math
 
 class TurtleAgent(Turtle):
     def __init__(self, plant):
@@ -22,20 +22,44 @@ class TurtleAgent(Turtle):
             self.setposition(self.position)
             self.hideturtle()
             self.color("green")
+            self.eaten = False
             self.pendown()
             self.dot(5)
+            self.penup()
 
     def eat(self, food):
         self.energy += food.energy
+        food.eaten = True
+        food.color("black")
+        self.pendown()
+        self.dot(6)
 
-    def move(self):
+    def move(self, target=None):
         self.energy -= 1
-        self.setheading(random.randint(0,360))
-        self.forward(self.velo)
+        if target:
+            self.goto(target.pos())
+            self.eat(target)
+        else:
+            self.setheading(random.randint(0,360))
+            self.forward(self.velo)
         self.die()
 
     def die(self):
         if self.energy <= 0:
             self.dead = True
+
+    def look(self, food_objects): #check whether turtle can see any food from list food_objects with all food objects
+        for food in food_objects:
+            dist = ((food.xcor() - self.xcor()) ** 2 + (food.ycor() - self.ycor()) ** 2) ** 0.5
+            angle_radians = math.atan2(food.ycor() - self.ycor(), food.xcor() - self.xcor())
+            angle_degrees = math.degrees(angle_radians)
+
+            if abs(angle_degrees) <= self.vision[1] / 2 and dist <= self.vision[0] and not food.eaten:
+                return food  # Food is within the field of view
+            else:
+                return None  # Food is not within the field of view
+            
+
+                
 
     
