@@ -18,3 +18,10 @@ this time the training data should be improved as the turtles now use the traine
 -repeat until turtles dont improve anymore
 
 -how to measure quality of run? how long the turtle survives
+
+-fix turtle stats (energy etc) as the training data would only contain runs from turtles with good stats 
+and therefore the model would know what to do with weak turtles
+
+-later the performance measure could be adjusted to be relative to the stats of the turtles, so that
+turtles with bad stats that perform well also get added into the training pool, e.g. (everything between 0 and 1)
+performance = runtime * (1 + 1-energy) * (1 + 1-vision) * (1 + 1-velocity) * (1 + energy consumption)

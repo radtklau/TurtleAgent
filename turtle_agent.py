@@ -11,16 +11,17 @@ class TurtleAgent(Turtle):
         #self.colormode(255)
 
         if not self.plant:
-            self.energy = random.randint(99,100) #born with random energy, if energy reaches zero turtle dies
-            self.vision = (random.randint(50,51), random.randint(0,180)) #(vision distance, field of sight)
-            self.velo = random.randint(self.vision[0] -1, self.vision[0]) #distance a turtle can cover in one time step (not greater than vision dist)
+            self.steps = 0 #count how many steps the turtle did
+            self.energy = 100 #random.randint(99,100) #born with random energy, if energy reaches zero turtle dies
+            self.vision = (50, 20) #(random.randint(50,51), random.randint(0,180)) #(vision distance, field of sight)
+            self.velo = 100 #random.randint(self.vision[0] -1, self.vision[0]) #distance a turtle can cover in one time step (not greater than vision dist)
             self.setposition(500,500)
             self.dead = False
             self.c = [0,255,0]
             self.color(tuple(self.c))
-            self.energy_cons = 5 #random.uniform(0.25,10.0)
+            self.energy_cons = 10 #random.uniform(0.25,10.0)
         else:
-            self.energy = random.randint(5,25) #how much energy the plant contains
+            self.energy = 10 #random.randint(5,25) #how much energy the plant contains
             self.position = ((random.randint(0,1000), random.randint(0,1000)))
             self.setposition(self.position)
             self.hideturtle()
@@ -51,23 +52,29 @@ class TurtleAgent(Turtle):
             g = 0
         self.c = [r, g, b]
         self.color(tuple(self.c))
-        self.energy -= self.energy_cons
+        v_scale = random.uniform(0.0,1.0) #how far to go in one time step but also how much energy is used LABEL!!
+        self.energy -= (self.energy_cons * v_scale) + 0.25 #also resting takes some energy
         if target:
             angle = self._calc_angle(target)
             self._turn_toward_angle(angle)
             #self.right(angle - self.heading())
             self.goto(target.pos())
+            self.steps += 1
             self._eat(target)
         else:
             while True:
-                self.setheading(random.randint(0,360))
-                self.forward(self.velo)
+                self.setheading(random.randint(0,360)) #direction LABEL!!
+                self.forward(self.velo * v_scale)
+                self.steps += 1
                 if self.pos()[0] < 0 or self.pos()[1] < 0 or self.pos()[0] > 1000 or self.pos()[1] > 1000:
                     self.undo()
+                    self.energy += self.energy_cons * v_scale
+                    self.steps -= 1
                 else:
                     break
         if self.energy <= 0:
             self._die()
+            print(self.steps)
         #self._show_fov()
 
     def _die(self):
