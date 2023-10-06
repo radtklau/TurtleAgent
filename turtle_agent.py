@@ -11,14 +11,14 @@ class TurtleAgent(Turtle):
         #self.colormode(255)
 
         if not self.plant:
-            self.energy = random.randint(0,100) #born with random energy, if energy reaches zero turtle dies
-            self.vision = (random.randint(0,100), random.randint(0,180)) #(vision distance, field of sight)
-            self.velo = random.randint(0, self.vision[0]) #distance a turtle can cover in one time step (not greater than vision dist)
+            self.energy = random.randint(99,100) #born with random energy, if energy reaches zero turtle dies
+            self.vision = (random.randint(50,51), random.randint(0,180)) #(vision distance, field of sight)
+            self.velo = random.randint(self.vision[0] -1, self.vision[0]) #distance a turtle can cover in one time step (not greater than vision dist)
             self.setposition(500,500)
             self.dead = False
             self.c = [0,255,0]
             self.color(tuple(self.c))
-            self.energy_cons = random.uniform(0.25,10.0)
+            self.energy_cons = 5 #random.uniform(0.25,10.0)
         else:
             self.energy = random.randint(5,25) #how much energy the plant contains
             self.position = ((random.randint(0,1000), random.randint(0,1000)))

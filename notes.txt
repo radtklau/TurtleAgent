@@ -1,0 +1,20 @@
+-supervised learning
+-label: action (how quick to move (rest,...,full speed), what direction)
+-feature: current state (environment, own specs (energy, vision, velocity, current heading))
+-feature label pair selection: select feature label pairs from runs that lasted long in comparison
+to the other runs in this batch (in timesteps)
+
+-generate training data:
+spawn x turtles and let them run 1000 times, for each run record what each turtle does and 
+take the recording of the longest turtle as training data, so in the end we have a batch of 
+1000 samples
+
+-training:
+train the ML decision making model
+
+-go back to generating training data:
+this time the training data should be improved as the turtles now use the trained ML decision making model
+
+-repeat until turtles dont improve anymore
+
+-how to measure quality of run? how long the turtle survives
