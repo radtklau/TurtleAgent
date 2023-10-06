@@ -13,6 +13,7 @@ if __name__=="__main__":
         for turtle in env.turtles:
             if turtle.dead:
                 continue
+            turtle.show_fov()
             food_obj = turtle.look(env.food)
             turtle.move(food_obj)
 
