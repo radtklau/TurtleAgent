@@ -11,6 +11,7 @@ class TurtleAgent(Turtle):
         #self.colormode(255)
 
         if not self.plant:
+            self.history = {}
             self.steps = 0 #count how many steps the turtle did
             self.energy = 100 #random.randint(99,100) #born with random energy, if energy reaches zero turtle dies
             self.vision = (50, 20) #(random.randint(50,51), random.randint(0,180)) #(vision distance, field of sight)
@@ -39,6 +40,9 @@ class TurtleAgent(Turtle):
         food.dot(5)
 
     def move(self, target=None):
+        energy_feature = self.energy
+        heading_feature = self.heading()
+        
         r = int(255 * (1-self.energy/100))
         g = int(255 * self.energy/100)
         b = 0
@@ -63,7 +67,8 @@ class TurtleAgent(Turtle):
             self._eat(target)
         else:
             while True:
-                self.setheading(random.randint(0,360)) #direction LABEL!!
+                h = random.randint(0,360)
+                self.setheading(h) #direction LABEL!!
                 self.forward(self.velo * v_scale)
                 self.steps += 1
                 if self.pos()[0] < 0 or self.pos()[1] < 0 or self.pos()[0] > 1000 or self.pos()[1] > 1000:
@@ -72,9 +77,13 @@ class TurtleAgent(Turtle):
                     self.steps -= 1
                 else:
                     break
+            self.history[self.steps] = [(energy_feature, heading_feature), (h, v_scale)] #feature, label
+
         if self.energy <= 0:
             self._die()
             print(self.steps)
+            print(self.history)
+
         #self._show_fov()
 
     def _die(self):
