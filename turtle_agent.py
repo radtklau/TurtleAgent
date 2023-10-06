@@ -30,7 +30,7 @@ class TurtleAgent(Turtle):
             self.dot(5)
             self.penup()
 
-    def eat(self, food):
+    def _eat(self, food):
         self.energy += food.energy
         food.eaten = True
         food.color("black")
@@ -38,7 +38,7 @@ class TurtleAgent(Turtle):
         food.dot(5)
 
     def move(self, target=None):
-        r = int(255*(1-self.energy/100))
+        r = int(255 * (1-self.energy/100))
         g = int(255 * self.energy/100)
         b = 0
         if r > 255:
@@ -53,8 +53,11 @@ class TurtleAgent(Turtle):
         self.color(tuple(self.c))
         self.energy -= self.energy_cons
         if target:
+            angle = self._calc_angle(target)
+            self._turn_toward_angle(angle)
+            #self.right(angle - self.heading())
             self.goto(target.pos())
-            self.eat(target)
+            self._eat(target)
         else:
             while True:
                 self.setheading(random.randint(0,360))
@@ -64,10 +67,10 @@ class TurtleAgent(Turtle):
                 else:
                     break
         if self.energy <= 0:
-            self.die()
-        #self.show_fov()
+            self._die()
+        #self._show_fov()
 
-    def die(self):
+    def _die(self):
         self.dead = True
 
     def look(self, food_objects): #check whether turtle can see any food from list food_objects with all food objects
@@ -83,11 +86,40 @@ class TurtleAgent(Turtle):
 
         return None  # Food is not within the field of view
             
-    def show_fov(self):
+    def _show_fov(self):
         self.clear()
         self.pendown()
         self.circle(self.vision[0])
+        self.undo()
         self.penup()
+
+    def _calc_angle(self, food):
+        turtle_pos = self.pos()
+        food_pos = food.pos()
+        vector_turtle_food = (food_pos[0] - turtle_pos[0], food_pos[1] - turtle_pos[1])
+        angle_radians = math.atan2(vector_turtle_food[1], vector_turtle_food[0])
+        angle_degrees = math.degrees(angle_radians)
+
+        return angle_degrees
+    
+    def _turn_toward_angle(self, target_angle_degrees):
+        # Get the current heading in degrees
+        current_heading = self.heading()
+
+        # Calculate the angle difference between the current heading and the target angle
+        angle_difference = target_angle_degrees - current_heading
+
+        # Normalize the angle difference to the range [-180, 180] degrees
+        if angle_difference > 180:
+            angle_difference -= 360
+        elif angle_difference < -180:
+            angle_difference += 360
+
+        # Determine whether to turn left or right based on the sign of the angle difference
+        if angle_difference > 0:
+            self.left(angle_difference)
+        else:
+            self.right(abs(angle_difference))
 
 
             

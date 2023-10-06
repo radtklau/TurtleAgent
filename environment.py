@@ -13,11 +13,11 @@ class Environment:
 
     def spawn_turtles(self):
         # Create a Turtle object
-        for _ in range(10):
+        for _ in range(25):
             new_turtle = TurtleAgent(plant=False)
             self.turtles.append(new_turtle)
     
     def spawn_food(self):
-        for _ in range(100):
+        for _ in range(50):
             new_plant = TurtleAgent(plant=True)
             self.food.append(new_plant)
