@@ -18,6 +18,6 @@ class Environment:
             self.turtles.append(new_turtle)
     
     def spawn_food(self):
-        for _ in range(50):
+        for _ in range(100):
             new_plant = TurtleAgent(plant=True)
             self.food.append(new_plant)

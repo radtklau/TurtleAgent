@@ -20,7 +20,7 @@ class TurtleAgent(Turtle):
             self.color(tuple(self.c))
             self.energy_cons = random.uniform(0.25,10.0)
         else:
-            self.energy = random.randint(1,10) #how much energy the plant contains
+            self.energy = random.randint(5,25) #how much energy the plant contains
             self.position = ((random.randint(0,1000), random.randint(0,1000)))
             self.setposition(self.position)
             self.hideturtle()
@@ -56,9 +56,14 @@ class TurtleAgent(Turtle):
             self.goto(target.pos())
             self.eat(target)
         else:
-            self.setheading(random.randint(0,360))
-            self.forward(self.velo)
-        if self.energy <= 0 or self.pos()[0] < 0 or self.pos()[1] < 0 or self.pos()[0] > 1000 or self.pos()[1] > 1000:
+            while True:
+                self.setheading(random.randint(0,360))
+                self.forward(self.velo)
+                if self.pos()[0] < 0 or self.pos()[1] < 0 or self.pos()[0] > 1000 or self.pos()[1] > 1000:
+                    self.undo()
+                else:
+                    break
+        if self.energy <= 0:
             self.die()
         #self.show_fov()
 
