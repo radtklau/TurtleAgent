@@ -25,3 +25,5 @@ and therefore the model would know what to do with weak turtles
 -later the performance measure could be adjusted to be relative to the stats of the turtles, so that
 turtles with bad stats that perform well also get added into the training pool, e.g. (everything between 0 and 1)
 performance = runtime * (1 + 1-energy) * (1 + 1-vision) * (1 + 1-velocity) * (1 + energy consumption)
+
+-TODO: continue implementing training data collection and processing
