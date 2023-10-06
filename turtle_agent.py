@@ -11,7 +11,7 @@ class TurtleAgent(Turtle):
 
         if not self.plant:
             self.energy = random.randint(0,100) #born with random energy, if energy reaches zero turtle dies
-            self.vision = (random.randint(0,10), random.randint(0,180)) #(vision distance, field of sight)
+            self.vision = (random.randint(0,100), random.randint(0,180)) #(vision distance, field of sight)
             self.velo = random.randint(0,50) #distance a turtle can cover in one time step
             self.setposition(500,500)
             self.dead = False
@@ -32,7 +32,7 @@ class TurtleAgent(Turtle):
         food.eaten = True
         food.color("black")
         food.pendown()
-        food.dot(6)
+        food.dot(5)
 
     def move(self, target=None):
         self.energy -= 1
@@ -44,21 +44,31 @@ class TurtleAgent(Turtle):
             self.forward(self.velo)
         if self.energy <= 0:
             self.die()
+        #self.show_fov()
 
     def die(self):
         self.dead = True
 
     def look(self, food_objects): #check whether turtle can see any food from list food_objects with all food objects
         for food in food_objects:
-            dist = ((food.xcor() - self.xcor()) ** 2 + (food.ycor() - self.ycor()) ** 2) ** 0.5
+            food_pos = food.pos()
+            turtle_pos = self.pos()
+            dist = ((food_pos[0] - turtle_pos[0]) ** 2 + (food_pos[1] - turtle_pos[1]) ** 2) ** 0.5
 
             if dist <= self.vision[0] and not food.eaten:
                 return food  # Food is within the field of view
             else:
-                return None  # Food is not within the field of view
+                continue
+
+        return None  # Food is not within the field of view
             
     def show_fov(self):
+        self.clear()
+        self.pendown()
         self.circle(self.vision[0])
+        self.penup()
+
+
             
 
                 
