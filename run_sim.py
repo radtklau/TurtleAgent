@@ -19,7 +19,7 @@ if __name__=="__main__":
     turtle_histories = []
     break_flag = False
 
-    while True:
+    while True: #BUG breaks to early (not all data is printed)
         for turtle in env.turtles:
             if turtle.dead:
                 turtle_histories.append(turtle.history) #capture turtle history
@@ -49,7 +49,9 @@ if __name__=="__main__":
     append_data(data_dict, new_data)
 
     with open(file_path, 'w') as json_file:
-        json.dump(data_dict, json_file)
+        json.dump(data_dict, json_file, indent=1)
+        
+
         
 
     
