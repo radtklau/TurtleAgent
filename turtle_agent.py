@@ -41,7 +41,7 @@ class TurtleAgent(Turtle):
 
     def move(self, target=None):
         energy_feature = self.energy
-        heading_feature = self.heading()
+        heading_feature = int(self.heading())
         
         r = int(255 * (1-self.energy/100))
         g = int(255 * self.energy/100)
@@ -56,8 +56,8 @@ class TurtleAgent(Turtle):
             g = 0
         self.c = [r, g, b]
         self.color(tuple(self.c))
-        v_scale = random.uniform(0.0,1.0) #how far to go in one time step but also how much energy is used LABEL!!
-        self.energy -= (self.energy_cons * v_scale) + 0.25 #also resting takes some energy
+        energy_label = random.uniform(0.0,1.0) #how far to go in one time step but also how much energy is used LABEL!!
+        self.energy -= (self.energy_cons * energy_label) + 0.25 #also resting takes some energy
         if target:
             angle = self._calc_angle(target)
             self._turn_toward_angle(angle)
@@ -67,21 +67,22 @@ class TurtleAgent(Turtle):
             self._eat(target)
         else:
             while True:
-                h = random.randint(0,360)
-                self.setheading(h) #direction LABEL!!
-                self.forward(self.velo * v_scale)
+                heading_label = random.randint(0,360)
+                self.setheading(heading_label) #direction LABEL!!
+                self.forward(self.velo * energy_label)
                 self.steps += 1
                 if self.pos()[0] < 0 or self.pos()[1] < 0 or self.pos()[0] > 1000 or self.pos()[1] > 1000:
                     self.undo()
-                    self.energy += self.energy_cons * v_scale
+                    self.energy += self.energy_cons * energy_label
                     self.steps -= 1
                 else:
                     break
-            self.history[self.steps] = [(energy_feature, heading_feature), (h, v_scale)] #feature, label
+            pos_feature = self.pos()
+            self.history[self.steps] = [(energy_feature, heading_feature, pos_feature), (energy_label, heading_label)] #feature, label
 
         if self.energy <= 0:
             self._die()
-            print(self.steps)
+            #print(self.steps)
             print(self.history)
 
         #self._show_fov()
