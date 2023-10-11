@@ -82,9 +82,9 @@ class TurtleAgent(Turtle):
 
         if self.energy <= 0:
             self._die()
-            print(self.steps)
-            print(self.history)
-            print("\n")
+            #print(self.steps)
+            #print(self.history)
+            #print("\n")
 
         #self._show_fov()
 
