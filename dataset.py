@@ -13,8 +13,10 @@ class CSVDataset(Dataset):
             pass
         # store the inputs and outputs
         
-        self.X = ...
-        self.y = ...
+        data = np(list(data_dict.values()))
+        
+        self.X = data[:,0]
+        self.y = data[:,1]
 
     # number of rows in the dataset
     def __len__(self):
