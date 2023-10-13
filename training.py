@@ -19,3 +19,18 @@ if __name__ == "__main__":
     criterion = nn.MSELoss()
     optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
     
+    # enumerate epochs
+    for epoch in range(100):
+        # enumerate mini batches
+        for i, (inputs, targets) in enumerate(train_dl):
+            # clear the gradients
+            optimizer.zero_grad()
+            # compute the model output
+            yhat = model(inputs)
+            # calculate loss
+            loss = criterion(yhat, targets)
+            # credit assignment
+            loss.backward()
+            # update model weights
+            optimizer.step()
+    
