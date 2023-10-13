@@ -1,3 +1,4 @@
+import torch
 from dataset import CSVDataset
 from torch.utils.data import DataLoader, random_split
 import torch.nn as nn
@@ -34,3 +35,4 @@ if __name__ == "__main__":
             # update model weights
             optimizer.step()
     
+    torch.save(model.state_dict(), 'trained_model.pth')
