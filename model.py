@@ -3,6 +3,8 @@ import torch.nn.functional as F
 import numpy as np
 import torch
 
+#TODO add more layers
+
 class LR_Model(nn.Module):
     def __init__(self):
         super(LR_Model, self).__init__()
