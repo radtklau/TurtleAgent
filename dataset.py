@@ -1,6 +1,7 @@
 from torch.utils.data import Dataset
 import numpy as np
 import json
+import torch
 
 class CSVDataset(Dataset):
     # load the dataset
@@ -32,6 +33,9 @@ class CSVDataset(Dataset):
                     label_np_array = np.expand_dims(np.array(l[1]), axis=0)
                     self.X = np.concatenate((self.X, new_feature_np_array), axis=0)
                     self.Y = np.concatenate((self.Y, label_np_array), axis=0)
+                    
+        self.X = torch.tensor(self.X, dtype=torch.float32)
+        self.Y = torch.tensor(self.Y, dtype=torch.float32)
 
     # number of rows in the dataset
     def __len__(self):
