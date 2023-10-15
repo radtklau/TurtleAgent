@@ -13,19 +13,25 @@ class CSVDataset(Dataset):
             pass
         
         """TODO whats the best way to store the data in the CSVDataset??
-        what does the Dataloader class expect?"""
-        self.X = np.empty([0,4])
-        self.Y = np.empty([0,2])
+        what does the random_split() expect?"""
+
         
-        for dict in data_dict.values():
+        for ind, dict in enumerate(data_dict.values()):
             dv = dict.values()
             l_dv = list(dv)
-            for l in l_dv:
-                new_feature_list = [l[0][0],l[0][1],l[0][2][0],l[0][2][1]]
-                new_feature_np_array = np.array(new_feature_list)
-                label_np_array = np.array(l[1]) 
-                np.append(self.X, new_feature_np_array) #BUG append doesnt work
-                np.append(self.Y, label_np_array)
+            for ind2, l in enumerate(l_dv):
+                if ind == 0 and ind2 == 0:
+                    new_feature_list = [l[0][0],l[0][1],l[0][2][0],l[0][2][1]]
+                    new_feature_np_array = np.array(new_feature_list)
+                    label_np_array = np.array(l[1]) 
+                    self.X = np.expand_dims(new_feature_np_array, axis=0)
+                    self.Y = np.expand_dims(label_np_array, axis=0) 
+                else:
+                    new_feature_list = [l[0][0],l[0][1],l[0][2][0],l[0][2][1]]
+                    new_feature_np_array = np.expand_dims(np.array(new_feature_list), axis=0)
+                    label_np_array = np.expand_dims(np.array(l[1]), axis=0)
+                    self.X = np.concatenate((self.X, new_feature_np_array), axis=0)
+                    self.Y = np.concatenate((self.Y, label_np_array), axis=0)
 
     # number of rows in the dataset
     def __len__(self):
