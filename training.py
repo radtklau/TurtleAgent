@@ -4,6 +4,7 @@ from torch.utils.data import DataLoader, random_split
 import torch.nn as nn
 import torch.optim as optim
 from model import LR_Model
+from tqdm import tqdm
 
 if __name__ == "__main__":
     file_path = 'data/training_0.json'
@@ -21,7 +22,7 @@ if __name__ == "__main__":
     optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
     
     # enumerate epochs
-    for epoch in range(100):
+    for epoch in tqdm(range(100)):
         # enumerate mini batches
         for i, (inputs, targets) in enumerate(train_dl):
             # clear the gradients

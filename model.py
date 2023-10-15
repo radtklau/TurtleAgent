@@ -12,5 +12,4 @@ class LR_Model(nn.Module):
     def forward(self, x):
         x = x.to(torch.float32)
         out = self.activation(self.layer(x))
-        print(out.dtype)
         return out
