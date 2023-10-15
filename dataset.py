@@ -39,4 +39,4 @@ class CSVDataset(Dataset):
 
     # get a row at an index
     def __getitem__(self, idx):
-        return [self.X[idx], self.y[idx]]
+        return [self.X[idx], self.Y[idx]]
